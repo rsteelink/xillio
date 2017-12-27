@@ -1,0 +1,143 @@
+/**
+ * SDL TranslationManger entry points
+ *
+ * This robot creates a package containing the connectors for the client based on 2 configured properties:
+ *      - install.path              (path where package will be created)
+ *      - install.connectors        (connectors to be shipped in package)
+ *
+ * (c) 2016 Xillio
+ */
+ 
+use System, Properties, File, Collection, String;
+
+// var installPath = Properties.get("install.path");
+// var connectors = Properties.get("install.connectors");
+// var connectorRegex = buildConnectorRegex(connectors);
+
+// /***********
+//  * MAIN
+//  **********/
+
+// System.print("Building package...");
+
+// if (!validate()) {
+//     System.print("Failed building package at: ":: installPath);
+//     return;
+// }
+// copyFolders();
+
+// System.print("Done building package at: ":: installPath);
+
+// /***********
+//  * FUNCTIONS
+//  **********/
+
+
+// // build the regex string required to determine if we should copy the connector
+// // output example: aem|sharepoint|documentum
+// private function buildConnectorRegex(connectors) {
+//     var result = "";
+//     var split = String.split(connectors, ","); 
+//     foreach (connector in split) {
+//         if (result != "") {
+//             result ::= "|";
+//         }
+//         result ::= String.toLower(String.trim(connector));
+//     }
+//     return result;
+// }
+
+// // copy over all content in current projectPath to the provided installation path
+// private function copyFolders() {
+//     var projectPath = System.info().projectPath;
+    
+//     // create installation folder if it does not exist
+//     if (!File.exists(installPath)) {
+//         File.createFolder(installPath);
+//     }
+
+//     // first copy all folders
+//     var folders = File.iterateFolders(projectPath, true);
+//     foreach (folder in folders) {
+//         // exclude everything that is not specified in install.connectors
+//         if (!isIgnoredPath(folder.path, projectPath)) {
+//             continue;
+//         }
+//         var copyPath = String.replace(folder.path, projectPath, installPath, false, false);
+//         File.createFolder(copyPath);
+//     }
+    
+//     // then copy all files
+//     var files = File.iterateFiles(projectPath, true);
+//     foreach (file in files) {
+//         // exclude everything that is not specified in install.connectors
+//         if (!isIgnoredPath(file, projectPath)) {
+//             continue;
+//         }    
+//         var copyPath = String.replace(file, projectPath, installPath, false, false);       
+//         File.copy(file, copyPath);
+//     }
+// }
+
+// // given provided path, check if we should copy the folder
+// private function isIgnoredPath(path, projectPath) {
+//     // ignore .git folder
+//     if (String.startsWith(path, projectPath::"\\.git")) {
+//         return false;
+//     }
+
+//     // only check stuff that's in connector & project
+//     if (!String.startsWith(path, projectPath::"\\connector\\") && !String.startsWith(path, projectPath::"\\project\\")) {
+//         return true;
+//     }
+    
+//     // check if it matches the connector regex, otherwise skip this
+//     var i = String.regexEscape(projectPath)::"\\\\[connector|project]\\\\["::connectorRegex::"].*";
+//     if (String.matches(path, String.regexEscape(projectPath)::"\\\\(connector|project)\\\\("::connectorRegex::").*")) {
+//         return true;
+//     }
+    
+//     return false;
+// }
+
+// // check if there is something to iterate
+// private function hasElements(collection) {
+//     var hasElements = false;
+//     foreach (element in collection) {
+//         hasElements = true;
+//         break;
+//     }
+//     return hasElements;
+// }
+
+// // validate that the properties are correct
+// private function validate() {
+//     var projectPath = System.info().projectPath;
+    
+//     // check if a path and connectors are specified
+//     if (installPath == null || installPath == "" || connectors == null || connectors == "") {
+//         var message = "\tError: Incorrect install.path and/or install.connectors specified in properties file!";
+//         System.print(message, "debug");
+//         return false;
+//     }
+    
+//     // check if path exists and if yes, if it is empty
+//     if (File.exists(installPath) && 
+//         (hasElements(File.iterateFolders(installPath, false))|| hasElements(File.iterateFiles(installPath, false)))) {
+        
+//         var message = "\tError: specified install.path is not empty, clear first";
+//         System.print(message, "debug");
+//         return false;
+//     }  
+    
+//     // now check if the connectors that are specified in install.connectors exist in this project
+//     foreach (connector in String.split(connectors, ",")) {
+//         connector = String.toLower(String.trim(connector));
+//         var message = "\tError: specified connector: ":: connector ::" does not exist in source";
+//         if (!File.exists(projectPath::"/project/"::connector) || !File.exists(projectPath::"/connector/"::connector)) {
+//             System.print(message, "debug");
+//             return false;
+//         }
+//     }
+//     return true;
+// }
